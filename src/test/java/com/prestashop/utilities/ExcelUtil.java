@@ -1,8 +1,8 @@
 package com.prestashop.utilities;
 
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +30,8 @@ public class ExcelUtil {
 			workBook = new XSSFWorkbook(ExcelFile);
 			workSheet = workBook.getSheet(sheetName);
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
