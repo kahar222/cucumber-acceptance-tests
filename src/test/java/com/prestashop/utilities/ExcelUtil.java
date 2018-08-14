@@ -14,7 +14,10 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+/*
+ * This is a utility for reading from writing to excel files.
+ * it ONLY works with xlsx files.
+ */
 public class ExcelUtil {
 
 	private XSSFSheet workSheet;
