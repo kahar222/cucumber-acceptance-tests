@@ -40,8 +40,8 @@ public class MyInfoStepDefs {
 
 	@Then("user info should match the db records using {string}")
 	public void user_info_should_match_the_db_records_using(String email) {
-		String sql = "select firstname, lastname, role from users\n" + "where email = 'efewtrell8c@craigslist.org';";
-
+		String sql = "select firstname, lastname, role from users where email = '" + email + "';";
+		System.out.println(sql);
 		List<Map<String, Object>> result = DBUtils.getQueryResult(sql);
 		// per requirements, we cannot have duplicated emails
 		assertEquals("Returned multiple users with email: " + email, 1, result.size());
@@ -76,7 +76,7 @@ public class MyInfoStepDefs {
 	}
 
 	@Then("team info should match the db records using {string}")
-	public void team_info_should_match_the_db_records_using(String string) {
+	public void team_info_should_match_the_db_records_using(String email) {
 		TeamPage teamPage = new TeamPage();
 
 		List<String> actualNames = new ArrayList<>();
@@ -84,17 +84,19 @@ public class MyInfoStepDefs {
 			actualNames.add(el.getText());
 		}
 
-		String query = "SELECT u1.firstname, u1.lastname, u1.role FROM users u1 INNER JOIN users u2 ON (u1.team_id = u2.team_id) where u2.email='efewtrell8c@craigslist.org'"; ;
+		String query = "SELECT u1.firstname, u1.lastname, u1.role FROM users u1 INNER JOIN users u2 ON (u1.team_id = u2.team_id) where u2.email='"
+				+ email + "'";
 
+		System.out.println(query);
 		List<Map<String, Object>> queryResult = DBUtils.getQueryResult(query);
 
 		assertEquals(queryResult.size(), actualNames.size());
-		
+
 		for (Map<String, Object> map : queryResult) {
-			String fullName = map.get("firstname") +" " +map.get("lastname");
-			assertTrue(fullName+" was not found", actualNames.contains(fullName));
+			String fullName = map.get("firstname") + " " + map.get("lastname");
+			assertTrue(fullName + " was not found", actualNames.contains(fullName));
 		}
-		
+
 	}
 
 }
