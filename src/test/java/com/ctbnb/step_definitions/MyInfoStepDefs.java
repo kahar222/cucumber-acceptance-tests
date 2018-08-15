@@ -1,12 +1,17 @@
 package com.ctbnb.step_definitions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.WebElement;
+
 import com.ctbnb.pages.SelfPage;
 import com.ctbnb.pages.SigninPage;
+import com.ctbnb.pages.TeamPage;
 import com.prestashop.utilities.BrowserUtils;
 import com.prestashop.utilities.ConfigurationReader;
 import com.prestashop.utilities.DBUtils;
@@ -60,6 +65,36 @@ public class MyInfoStepDefs {
 		assertEquals(expectedLastName, aLastname);
 		assertEquals(expectedRole, aRole);
 
+	}
+
+	@When("the user is on the my team page")
+	public void the_user_is_on_the_my_team_page() {
+		SelfPage selfPage = new SelfPage();
+		selfPage.goToTeam();
+		BrowserUtils.waitFor(2);
+
+	}
+
+	@Then("team info should match the db records using {string}")
+	public void team_info_should_match_the_db_records_using(String string) {
+		TeamPage teamPage = new TeamPage();
+
+		List<String> actualNames = new ArrayList<>();
+		for (WebElement el : teamPage.teamMemberNames) {
+			actualNames.add(el.getText());
+		}
+
+		String query = "SELECT u1.firstname, u1.lastname, u1.role FROM users u1 INNER JOIN users u2 ON (u1.team_id = u2.team_id) where u2.email='efewtrell8c@craigslist.org'"; ;
+
+		List<Map<String, Object>> queryResult = DBUtils.getQueryResult(query);
+
+		assertEquals(queryResult.size(), actualNames.size());
+		
+		for (Map<String, Object> map : queryResult) {
+			String fullName = map.get("firstname") +" " +map.get("lastname");
+			assertTrue(fullName+" was not found", actualNames.contains(fullName));
+		}
+		
 	}
 
 }

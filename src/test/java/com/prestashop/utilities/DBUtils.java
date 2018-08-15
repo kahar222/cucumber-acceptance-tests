@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DBUtils {
-	
+
 	private static Connection connection;
 	private static Statement statement;
 	private static ResultSet resultSet;
@@ -33,16 +33,21 @@ public class DBUtils {
 
 	public static void destroy() {
 		try {
-			resultSet.close();
-			statement.close();
-			connection.close();
+			if (resultSet != null) {
+				resultSet.close();
+			}
+			if (statement!=null) {
+				statement.close();
+			}
+			if (connection!=null) {
+				connection.close();
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
-
 
 	public static List<Map<String, Object>> getQueryResult(String query) {
 
