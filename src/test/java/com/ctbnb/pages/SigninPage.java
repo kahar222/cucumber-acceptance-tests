@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.prestashop.utilities.Driver;
 
-public class SigninPage extends TopNavigationBar {
+public class SigninPage {
 	public SigninPage() {
 		PageFactory.initElements(Driver.getDriver(), this);
 	}
