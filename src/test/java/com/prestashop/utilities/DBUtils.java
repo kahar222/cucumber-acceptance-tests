@@ -15,8 +15,9 @@ public class DBUtils {
 
 	public static void main(String[] args) {
 		createConnection();
-		String query = "Select * from team";
-		System.out.println(getColumnNames(query ));
+		String query= "select * from users where team_id=38;";
+		System.out.println(getColumnData(query, "firstname"));
+		
 		destroy();
 	}
 

@@ -42,7 +42,7 @@ public class MyInfoStepDefs {
 	public void user_info_should_match_the_db_records_using(String email) {
 		String sql = "select firstname, lastname, role from users where email = '" + email + "';";
 		System.out.println(sql);
-		List<Map<String, Object>> result = DBUtils.getQueryResult(sql);
+		List<Map<String, Object>> result = DBUtils.getQueryResultMap(sql);
 		// per requirements, we cannot have duplicated emails
 		assertEquals("Returned multiple users with email: " + email, 1, result.size());
 
@@ -88,7 +88,7 @@ public class MyInfoStepDefs {
 				+ email + "'";
 
 		System.out.println(query);
-		List<Map<String, Object>> queryResult = DBUtils.getQueryResult(query);
+		List<Map<String, Object>> queryResult = DBUtils.getQueryResultMap(query);
 
 		assertEquals(queryResult.size(), actualNames.size());
 

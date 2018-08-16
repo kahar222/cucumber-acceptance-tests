@@ -58,6 +58,8 @@ public class BatchInfoStepDefs {
 			}
 
 			assertTrue("did not find: " + key + " " + eGrad, found);
+			
+		
 		}
 
 	}

@@ -16,8 +16,8 @@ Scenario: my team
 Scenario: batches 
 	Given I retrieve the batches information 
 	Then following batches should be displayed 
-		|7| true |
-		|8| false|
+		| 7	| true |
+		| 8	| false|
 		
 		
 		
