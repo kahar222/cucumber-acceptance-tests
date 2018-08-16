@@ -1,10 +1,12 @@
 package com.ctbnb.step_definitions;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Map;
 
+import com.ctbnb.pages.MapPage;
 import com.prestashop.utilities.DBUtils;
 
 import cucumber.api.java.en.Given;
@@ -24,20 +26,18 @@ public class BatchInfoStepDefs {
 	@Then("following batches should be displayed")
 	public void following_batches_should_be_displayed(Map<String, String> eBatches) {
 		System.out.println(eBatches);
-	
+
 		/*
-		 * We need to compare values from different source
-		 * 	1. expected value from feature file
-		 * 		data format: Map<ek, ev>
-		 * 2. actual from databse
-		 * 		data format: List<Map <col av>>
+		 * We need to compare values from different source 1. expected value from
+		 * feature file data format: Map<ek, ev> 2. actual from databse data format:
+		 * List<Map <col av>>
 		 * 
-		 * ek  ---> av
+		 * ek ---> av
 		 * 
 		 * 
 		 */
 		// [
-		// {number=8, isgraduated=false}, 
+		// {number=8, isgraduated=false},
 		// {number=7, isgraduated=true}
 		// ]
 
@@ -46,11 +46,11 @@ public class BatchInfoStepDefs {
 		for (String key : eBatches.keySet()) {
 			boolean found = false;
 			String eGrad = eBatches.get(key);
-			
+
 			for (Map<String, Object> dbRow : batches) {
-				int number =  (int) dbRow.get("number");
+				int number = (int) dbRow.get("number");
 				Boolean grad = (Boolean) dbRow.get("isgraduated");
-				
+
 				if (String.valueOf(number).equals(key) && String.valueOf(grad).equals(eGrad)) {
 					found = true;
 					continue;
@@ -58,10 +58,19 @@ public class BatchInfoStepDefs {
 			}
 
 			assertTrue("did not find: " + key + " " + eGrad, found);
-			
-		
 		}
+	}
 
+	@Then("correct campus should be displayed for {string}")
+	public void correct_campus_should_be_displayed_for(String email) {
+		String query = "select location from campus where id = (select campus_id from users\n"
+				+ "where email = 'efewtrell8c@craigslist.org');";
+
+		String expectedCampus = (String) DBUtils.getCellValue(query);
+
+		String actualCampus = new MapPage().campus.getText();
+		
+		assertEquals("Campus name did not match", expectedCampus, actualCampus);
 	}
 
 }
