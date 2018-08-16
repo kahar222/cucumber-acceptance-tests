@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.ctbnb.pages.SelfPage;
@@ -28,8 +29,8 @@ public class MyInfoStepDefs {
 		Driver.getDriver().get(ConfigurationReader.getProperty("qa1_url"));
 		SigninPage signInPage = new SigninPage();
 		signInPage.email.sendKeys(username);
-		signInPage.password.sendKeys(password);
-		signInPage.signInButton.click();
+		signInPage.password.sendKeys(password+ Keys.ENTER);
+//		signInPage.signInButton.click();
 	}
 
 	@When("the user is on the my self page")

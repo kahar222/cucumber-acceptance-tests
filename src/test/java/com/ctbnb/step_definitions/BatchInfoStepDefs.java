@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ctbnb.pages.MapPage;
+import com.prestashop.utilities.BrowserUtils;
 import com.prestashop.utilities.DBUtils;
 
 import cucumber.api.java.en.Given;
@@ -63,13 +64,13 @@ public class BatchInfoStepDefs {
 
 	@Then("correct campus should be displayed for {string}")
 	public void correct_campus_should_be_displayed_for(String email) {
-		String query = "select location from campus where id = (select campus_id from users\n"
-				+ "where email = 'efewtrell8c@craigslist.org');";
-
-		String expectedCampus = (String) DBUtils.getCellValue(query);
-
-		String actualCampus = new MapPage().campus.getText();
+		MapPage mapPage = new MapPage();
+		BrowserUtils.waitFor(2);
 		
+		String query = "select location from campus where id = (select campus_id from users\n"
+				+ "where email = '"+email+"');";
+		String expectedCampus = (String) DBUtils.getCellValue(query);
+		String actualCampus = mapPage.campus.getText();
 		assertEquals("Campus name did not match", expectedCampus, actualCampus);
 	}
 

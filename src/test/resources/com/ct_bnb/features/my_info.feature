@@ -24,10 +24,38 @@ Scenario Outline: campust test
 	Given user logs in using "<email>" "<password>" 
 	Then correct campus should be displayed for "<email>"
 	Examples: 
-		|   email                         | password|
+		|   email                         | password  |
 		|	efewtrell8c@craigslist.org	  |jamesmay   |
-#		|	teachervamikemarcus@gmail.com | mikemarcus|
-#		|	htwinbrowb4@blogspot.com	      |kanyaang   |
+		|	teachervamikemarcus@gmail.com | mikemarcus|
+		|	htwinbrowb4@blogspot.com	      |kanyabang  |
+		
+		
+		
+		
+		
+		
+		
+		
+Scenario Outline: login as <user> type
+	Given the user logs in as <user>
+	And there are available spots for scheduling
+	When the user hunts for a spot
+	Then book button <expected> be displayed
+
+	Examples:
+	| user        | expected    | 
+	| team member | should not  | 
+	| team lead   | should      |
+	| teacher     | should      |
+
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
