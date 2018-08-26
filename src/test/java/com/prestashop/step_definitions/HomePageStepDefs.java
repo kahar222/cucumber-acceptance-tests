@@ -5,12 +5,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Map;
 
+import org.junit.Assert;
+
 import com.prestashop.pages.HomePage;
 import com.prestashop.pages.SigninPage;
 import com.prestashop.utilities.ConfigurationReader;
 import com.prestashop.utilities.Driver;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -36,7 +37,7 @@ public class HomePageStepDefs {
 		HomePage homePage = new HomePage();
 		String actual = homePage.search.getAttribute("value");
 		assertEquals("t shirt", actual);
-
+		Assert.fail();
 	}
 
 	String title;
